@@ -17,12 +17,12 @@ const mg = mailgun({
 
 app.post("/form", async (req, res) => {
   try {
-    const { firstname, lastname, email, message } = req.fields;
+    const { firstname, lastname, email, message, subject } = req.fields;
 
     const data = {
       from: `${firstname} ${lastname} <${email}>`,
       to: process.env.MY_MAIL,
-      subject: "Hello",
+      subject: subject,
       text: message,
     };
     // You can see a record of this email in your logs: https://app.mailgun.com/app/logs.
