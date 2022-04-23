@@ -40,6 +40,8 @@ app.post("/form", async (req, res) => {
 app.get("*", (req, res) => {
   res.status(400).json({ message: "Page not found" });
 });
-app.listen(3000, () => {
-  console.log("server listening port: 3000");
+
+const port = process.env.PORT;
+app.listen(port, () => {
+  console.log(`server listening port: ${port}`);
 });
