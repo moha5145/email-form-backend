@@ -15,28 +15,12 @@ const mg = mailgun({
   domain: process.env.DOMAIN,
 });
 
-app.post("/form", async (req, res) => {
-  try {
-    const { firstname, lastname, email, message, subject } = req.fields;
+const tripadvisorMail = require("./router/tripadvisorMail");
+app.use(tripadvisorMail);
 
-    const data = {
-      from: `${firstname} ${lastname} <${email}>`,
-      to: process.env.MY_MAIL,
-      subject: subject,
-      text: message,
-    };
-    // You can see a record of this email in your logs: https://app.mailgun.com/app/logs.
-    // You can send up to 300 emails/day from this sandbox server.
-    // Next, you should add your own domain so you can send 10000 emails/month for free.
+const portfolioMail = require("./router/portfolioMail");
+app.use(portfolioMail);
 
-    mg.messages().send(data, (error, body) => {
-      res.json({ message: "Formule bien envoyé" });
-      console.log(body);
-    });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
 app.get("*", (req, res) => {
   res.status(400).json({ message: "Page not found" });
 });
