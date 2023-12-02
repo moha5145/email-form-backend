@@ -15,14 +15,20 @@ router.post("/portfolio/contact/form", async (req, res) => {
   try {
     const { name, email, message } = req.fields;
 
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: "Veuillez remplir tous les champs" });
+    }
+    
+    const data = {
+      from: `${name} <${email}>`,
+      to: process.env.P_MAIL,
+      subject: "Portfolio message",
+      text: message,
+    };
+
     mg.messages
-      .create(process.env.P_DOMAIN, {
-        from: `${name} <${email}>`,
-        to: [process.env.P_MAIL],
-        subject: "Portfolio message",
-        text: message,
-      })
-      .then((msg) => res.json("Message bien envoyé")); // logs response data
+      .create(process.env.P_DOMAIN, data)
+      .then((msg) => res.json({message: "Message bien envoyé",  data: msg })); // logs response data
     //   .catch((err) => res.status(400).json({ error: err.message })); // logs any error`;
   } catch (error) {
     res.status(400).json({ error: error.message });

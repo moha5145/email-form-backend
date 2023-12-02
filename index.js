@@ -15,9 +15,6 @@ const mg = mailgun({
   domain: process.env.DOMAIN,
 });
 
-const tripadvisorMail = require("./router/tripadvisorMail");
-app.use(tripadvisorMail);
-
 const portfolioMail = require("./router/portfolioMail");
 app.use(portfolioMail);
 
