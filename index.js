@@ -8,13 +8,6 @@ app.use(formidable());
 const cors = require("cors");
 app.use(cors());
 
-const mailgun = require("mailgun-js");
-
-const mg = mailgun({
-  apiKey: process.env.APIKEY,
-  domain: process.env.DOMAIN,
-});
-
 const portfolioMail = require("./router/portfolioMail");
 app.use(portfolioMail);
 

@@ -8,7 +8,7 @@ const mailgun = new Mailgun(formData);
 
 const mg = mailgun.client({
   username: "api",
-  key: process.env.P_KEY,
+  key: process.env.APIKEY,
 });
 
 router.post("/portfolio/contact/form", async (req, res) => {
@@ -21,13 +21,13 @@ router.post("/portfolio/contact/form", async (req, res) => {
     
     const data = {
       from: `${name} <${email}>`,
-      to: process.env.P_MAIL,
+      to: process.env.MY_MAIL,
       subject: "Portfolio message",
       text: message,
     };
 
     mg.messages
-      .create(process.env.P_DOMAIN, data)
+      .create(process.env.DOMAIN, data)
       .then((msg) => res.json({message: "Message bien envoyé",  data: msg })); // logs response data
     //   .catch((err) => res.status(400).json({ error: err.message })); // logs any error`;
   } catch (error) {
